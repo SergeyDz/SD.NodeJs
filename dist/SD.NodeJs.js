@@ -1,1 +1,5 @@
-alert('Hello');
+(
+	function() {
+		console.log('js app started');
+	}
+)();
