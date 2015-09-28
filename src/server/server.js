@@ -1,6 +1,6 @@
 var http = require('http');
 var MongoClient = require('mongodb').MongoClient;
-var assert = require('assert')
+var assert = require('assert');
 var ObjectId = require('mongodb').ObjectID;
 
 var url = 'mongodb://localhost:27017/test';
@@ -10,7 +10,7 @@ var findUsers = function(db, callback, res) {
    var users = [];
    cursor.each(function(err, user) {
       assert.equal(err, null);
-      if (user != null) {
+      if (user !== null) {
          users.push(user);
       } else {
          res.end(JSON.stringify(users));
