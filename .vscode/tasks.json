@@ -9,9 +9,20 @@
 // A task runner that calls the Typescipt compiler (tsc) and 
 // Compiles a HelloWorld.ts program
 {
-	
-	// The command is tsc.
-	"command": "grunt"
+    "version": "0.1.0",
+    "command": "grunt",
+    "isShellCommand": true,
+    "args": [
+        "--no-color"
+    ],
+    "tasks": [
+        {
+            "taskName": "build",
+            "args": [],
+            "isBuildCommand": true
+           
+        }
+    ]
 }
 
 // A task runner configuration for gulp. Gulp provides a less task

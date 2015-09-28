@@ -1,9 +1,11 @@
 {
   "name" : "SD.NodeJs",
+  "main": "src/server.js",
   "dependencies": {
     "express": "latest",
     "react": "latest",
     "mongodb": "latest",
+    "mongoose": "latest",
     "grunt": "latest"
   },
   "devDependencies": {
