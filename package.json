@@ -1,13 +1,14 @@
 {
   "name" : "SD.NodeJs",
-  "version": "0.0.0.1",
-  "main": "src/server.js",
+  "version": "0.0.1",
+  "main": "src/index.js",
   "dependencies": {
     "express": "latest",
     "react": "latest",
     "mongodb": "latest",
     "mongoose": "latest",
-    "grunt": "latest"
+    "grunt": "latest",
+    "body-parser": "latest"
   },
   "devDependencies": {
     "grunt": "^0.4.5",

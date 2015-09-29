@@ -72,6 +72,7 @@ module.exports = function (grunt) {
            { expand: true, 
             src: [
               './node_modules/express/**',
+              './node_modules/body-parser/**',
               './node_modules/mongoose/**',
               './node_modules/mongodb/**'
               ], 

@@ -1,8 +1,5 @@
-var mongoose     = require('mongoose');
-var Schema       = mongoose.Schema;
+var mongo = require('../mongo/mongo.js');
 
-var CommonSchema   = new Schema({
-    name: String
-});
+var User = mongo.db.model('User', mongo.schema);
 
-module.exports = mongoose.model('User', CommonSchema);
+module.exports = User;
