@@ -1,33 +1,34 @@
-module.exports = function(grunt) {
+module.exports = function (grunt) {
   
-    // Load grunt tasks automatically
-    require('load-grunt-tasks')(grunt);
+  // Load grunt tasks automatically
+  require('load-grunt-tasks')(grunt);
 
-    // Time how long tasks take. Can help when optimizing build times
-    require('time-grunt')(grunt);
+  // Time how long tasks take. Can help when optimizing build times
+  require('time-grunt')(grunt);
 
-    // Configurable paths for the application
-    var appConfig = {
-        spa: {
-          src: 'src/client/**/*.js',
-          dist: 'dist/spa',
-          pub: '/var/www/SD.NodeJs/public_html/'
-        },
-        api: {
-          src: [''],
-          dist: 'dist/api',
-          pub: '/var/www/SD.NodeJs/public_html/'
-        }
-        
-    };
+  // Configurable paths for the application
+  var appConfig = {
+    spa: {
+      src: 'src/client/**/*.js',
+      dist: 'dist/spa',
+      pub: '/var/www/SD.NodeJs/public_html/'
+    },
+    api: {
+      src: [''],
+      dist: 'dist/api',
+      pub: '/var/www/SD.NodeJs/public_node/'
+    }
+
+  };
 
   grunt.initConfig({
     
     // Project settings
     yeoman: appConfig,
-        
+
     pkg: grunt.file.readJSON('package.json'),
     concat: {
+
       options: {
         separator: ';'
       },
@@ -50,15 +51,22 @@ module.exports = function(grunt) {
       files: ['test/**/*.html']
     },
     copy: {
-      main: {
-          files: [
-            // includes files within path
-            {expand: true, flatten:true, src: ['<%= yeoman.spa.dist %>/**/*.js'], dest: '<%= yeoman.spa.pub %>' },
+      spa: {
+        files: [
+          // includes files within path
+          { expand: true, flatten: true, src: ['<%= yeoman.spa.dist %>/**/*.js'], dest: '<%= yeoman.spa.pub %>' },
       
-            // includes files within path and its sub-directories
-            {expand: true, flatten:true, src: ['src/client/index.html'], dest: '<%= yeoman.spa.pub %>' }
-          ],
-        }
+          // includes files within path and its sub-directories
+          { expand: true, flatten: true, src: ['src/client/index.html'], dest: '<%= yeoman.spa.pub %>' }
+        ],
+      },
+
+      api: {
+        files: [
+          // includes files within path
+          { expand: true, flatten: true, src: ['<%= yeoman.api.dist %>/**/*.js'], dest: '<%= yeoman.api.pub %>' },
+        ],
+      }
     },
     jshint: {
       files: ['Gruntfile.js', 'src/**/*.js', 'test/**/*.js'],
@@ -87,7 +95,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('test', ['jshint', 'qunit']);
 
-  grunt.registerTask('build', ['jshint', 'concat', 'uglify', 'copy']);
-  grunt.registerTask('default', ['jshint', 'concat', 'uglify', 'copy']);
+  grunt.registerTask('build', ['jshint', 'concat', 'uglify', 'copy:spa', 'copy:api']);
+  grunt.registerTask('default', []);
 
 };
