@@ -1,6 +1,22 @@
 module.exports = function(grunt) {
+  
+    // Load grunt tasks automatically
+    require('load-grunt-tasks')(grunt);
+
+    // Time how long tasks take. Can help when optimizing build times
+    require('time-grunt')(grunt);
+
+    // Configurable paths for the application
+    var appConfig = {
+        dist: 'dist/spa/*',
+        pub: '/var/www/SD.NodeJs/public_html/'
+    };
 
   grunt.initConfig({
+    
+    // Project settings
+    yeoman: appConfig,
+        
     pkg: grunt.file.readJSON('package.json'),
     concat: {
       options: {
@@ -28,10 +44,10 @@ module.exports = function(grunt) {
       main: {
           files: [
             // includes files within path
-            {expand: true, flatten:true, src: ['dist/*'], dest: '/var/www/SD.NodeJs/public_html/'},
+            {expand: true, flatten:true, src: ['<%= yeoman.dist %>'], dest: '<%= yeoman.pub %>' },
       
             // includes files within path and its sub-directories
-            {expand: true, flatten:true, src: ['src/client/index.html'], dest: '/var/www/SD.NodeJs/public_html/'}
+            {expand: true, flatten:true, src: ['src/client/index.html'], dest: '<%= yeoman.pub %>' }
           ],
         }
     },
