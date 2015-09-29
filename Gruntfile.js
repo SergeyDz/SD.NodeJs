@@ -8,8 +8,17 @@ module.exports = function(grunt) {
 
     // Configurable paths for the application
     var appConfig = {
-        dist: 'dist/spa/*',
-        pub: '/var/www/SD.NodeJs/public_html/'
+        spa: {
+          src: 'src/client/**/*.js',
+          dist: 'dist/spa',
+          pub: '/var/www/SD.NodeJs/public_html/'
+        },
+        api: {
+          src: [''],
+          dist: 'dist/api',
+          pub: '/var/www/SD.NodeJs/public_html/'
+        }
+        
     };
 
   grunt.initConfig({
@@ -23,8 +32,8 @@ module.exports = function(grunt) {
         separator: ';'
       },
       dist: {
-        src: ['src/client/**/*.js'],
-        dest: 'dist/<%= pkg.name %>.js'
+        src: ['<%= yeoman.spa.src %>'],
+        dest: '<%=yeoman.spa.dist%>/<%= pkg.name %>.js'
       }
     },
     uglify: {
@@ -33,7 +42,7 @@ module.exports = function(grunt) {
       },
       dist: {
         files: {
-          'dist/<%= pkg.name %>.min.js': ['<%= concat.dist.dest %>']
+          '<%=yeoman.spa.dist%>/<%= pkg.name %>.min.js': ['<%= concat.dist.dest %>']
         }
       }
     },
@@ -44,10 +53,10 @@ module.exports = function(grunt) {
       main: {
           files: [
             // includes files within path
-            {expand: true, flatten:true, src: ['<%= yeoman.dist %>'], dest: '<%= yeoman.pub %>' },
+            {expand: true, flatten:true, src: ['<%= yeoman.spa.dist %>/**/*.js'], dest: '<%= yeoman.spa.pub %>' },
       
             // includes files within path and its sub-directories
-            {expand: true, flatten:true, src: ['src/client/index.html'], dest: '<%= yeoman.pub %>' }
+            {expand: true, flatten:true, src: ['src/client/index.html'], dest: '<%= yeoman.spa.pub %>' }
           ],
         }
     },
