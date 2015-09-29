@@ -14,7 +14,7 @@ module.exports = function (grunt) {
       pub: '/var/www/SD.NodeJs/public_html/'
     },
     api: {
-      src: [''],
+      src: 'src/server/**/*.js',
       dist: 'dist/api',
       pub: '/var/www/SD.NodeJs/public_node/'
     }
@@ -28,22 +28,22 @@ module.exports = function (grunt) {
 
     pkg: grunt.file.readJSON('package.json'),
     concat: {
-
-      options: {
-        separator: ';'
+      spa: {
+          src: '<%= yeoman.spa.src %>',
+          dest: '<%=yeoman.spa.dist%>/<%= pkg.name %>.js'
       },
-      dist: {
-        src: ['<%= yeoman.spa.src %>'],
-        dest: '<%=yeoman.spa.dist%>/<%= pkg.name %>.js'
+      api: {
+          src: '<%= yeoman.api.src %>',
+          dest: '<%=yeoman.api.dist%>/index.js'
       }
     },
     uglify: {
       options: {
         banner: '/*! <%= pkg.name %> <%= grunt.template.today("dd-mm-yyyy") %> */\n'
       },
-      dist: {
-        files: {
-          '<%=yeoman.spa.dist%>/<%= pkg.name %>.min.js': ['<%= concat.dist.dest %>']
+      spa: {
+          files: {
+            '<%=yeoman.spa.dist%>/<%= pkg.name %>.min.js': ['<%= concat.spa.dest %>']
         }
       }
     },
@@ -95,7 +95,9 @@ module.exports = function (grunt) {
 
   grunt.registerTask('test', ['jshint', 'qunit']);
 
-  grunt.registerTask('build', ['jshint', 'concat', 'uglify', 'copy:spa', 'copy:api']);
+  grunt.registerTask('build-spa', ['jshint', 'concat:spa', 'uglify:spa', 'copy:spa', 'copy:api']);
+  grunt.registerTask('build-api', ['jshint', 'concat:api', 'copy:api']);
+  grunt.registerTask('build', ['build-spa', 'build-api']);
   grunt.registerTask('default', []);
 
 };
