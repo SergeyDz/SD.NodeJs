@@ -66,7 +66,12 @@ module.exports = function (grunt) {
 
       api: {
         files: [
-           { expand: true, src: ['./node_modules/**'], dest: '<%= yeoman.api.pub %>' },
+           { expand: true, 
+            src: [
+              './node_modules/express/**',
+              './node_modules/mongodb/**'
+              ], 
+              dest: '<%= yeoman.api.pub %>' },
           // includes files within path
           { expand: true, flatten: true, src: ['<%= yeoman.api.dist %>/**/*.js'], dest: '<%= yeoman.api.pub %>' },
         ],
