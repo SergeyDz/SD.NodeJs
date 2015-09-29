@@ -1,5 +1,6 @@
 {
   "name" : "SD.NodeJs",
+  "version": "0.0.0.1",
   "main": "src/server.js",
   "dependencies": {
     "express": "latest",
