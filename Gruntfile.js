@@ -33,7 +33,10 @@ module.exports = function (grunt) {
           dest: '<%=yeoman.spa.dist%>/<%= pkg.name %>.js'
       },
       api: {
-          src: '<%= yeoman.api.src %>',
+          src:
+            [
+              '<%= yeoman.api.src %>'
+            ],
           dest: '<%=yeoman.api.dist%>/index.js'
       }
     },
@@ -63,6 +66,7 @@ module.exports = function (grunt) {
 
       api: {
         files: [
+           { expand: true, src: ['./node_modules/**'], dest: '<%= yeoman.api.pub %>' },
           // includes files within path
           { expand: true, flatten: true, src: ['<%= yeoman.api.dist %>/**/*.js'], dest: '<%= yeoman.api.pub %>' },
         ],
@@ -95,7 +99,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('test', ['jshint', 'qunit']);
 
-  grunt.registerTask('build-spa', ['jshint', 'concat:spa', 'uglify:spa', 'copy:spa', 'copy:api']);
+  grunt.registerTask('build-spa', ['jshint', 'concat:spa', 'uglify:spa', 'copy:spa']);
   grunt.registerTask('build-api', ['jshint', 'concat:api', 'copy:api']);
   grunt.registerTask('build', ['build-spa', 'build-api']);
   grunt.registerTask('default', []);
