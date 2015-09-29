@@ -14,7 +14,7 @@ module.exports = function (grunt) {
       pub: '/var/www/SD.NodeJs/public_html/'
     },
     api: {
-      src: 'src/server/**/*.js',
+      src: 'src/server',
       dist: 'dist/api',
       pub: '/var/www/SD.NodeJs/public_node/'
     }
@@ -31,13 +31,6 @@ module.exports = function (grunt) {
       spa: {
           src: '<%= yeoman.spa.src %>',
           dest: '<%=yeoman.spa.dist%>/<%= pkg.name %>.js'
-      },
-      api: {
-          src:
-            [
-              '<%= yeoman.api.src %>'
-            ],
-          dest: '<%=yeoman.api.dist%>/index.js'
       }
     },
     uglify: {
@@ -63,17 +56,28 @@ module.exports = function (grunt) {
           { expand: true, flatten: true, src: ['src/client/index.html'], dest: '<%= yeoman.spa.pub %>' }
         ],
       },
+      
+      apidist: {
+        files: [
+           { 
+            expand: true, 
+            cwd: '<%= yeoman.api.src %>',
+            src:  '**',
+            dest: '<%= yeoman.api.dist %>' }
+        ],
+      },
 
-      api: {
+      apipub: {
         files: [
            { expand: true, 
             src: [
               './node_modules/express/**',
+              './node_modules/mongoose/**',
               './node_modules/mongodb/**'
               ], 
               dest: '<%= yeoman.api.pub %>' },
           // includes files within path
-          { expand: true, flatten: true, src: ['<%= yeoman.api.dist %>/**/*.js'], dest: '<%= yeoman.api.pub %>' },
+          { expand: true, cwd: '<%= yeoman.api.dist %>', src: '**', dest: '<%= yeoman.api.pub %>' },
         ],
       }
     },
@@ -105,7 +109,7 @@ module.exports = function (grunt) {
   grunt.registerTask('test', ['jshint', 'qunit']);
 
   grunt.registerTask('build-spa', ['jshint', 'concat:spa', 'uglify:spa', 'copy:spa']);
-  grunt.registerTask('build-api', ['jshint', 'concat:api', 'copy:api']);
+  grunt.registerTask('build-api', ['jshint', 'copy:apidist', 'copy:apipub']);
   grunt.registerTask('build', ['build-spa', 'build-api']);
   grunt.registerTask('default', []);
 
