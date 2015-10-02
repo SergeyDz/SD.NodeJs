@@ -3,7 +3,7 @@
 		'use strict';
 
 		React.render(
-			React.createElement(CommentBox, null),
+			React.createElement(CommentTab, null),
 				document.getElementById('content')
 			);
 	}
