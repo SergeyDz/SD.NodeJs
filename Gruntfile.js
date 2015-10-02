@@ -9,7 +9,7 @@ module.exports = function (grunt) {
   // Configurable paths for the application
   var appConfig = {
     spa: {
-      src: 'src/client/**/*.js',
+      src: 'src/client/script',
       dist: 'dist/spa',
       pub: '/var/www/SD.NodeJs/public_html/'
     },
@@ -28,8 +28,17 @@ module.exports = function (grunt) {
 
     pkg: grunt.file.readJSON('package.json'),
     concat: {
+      options: {
+        separator: ';'
+      },
       spa: {
-          src: '<%= yeoman.spa.src %>',
+          src: 
+            [
+              './node_modules/react/dist/react.js',
+              '<%= yeoman.spa.src %>/**/*.js', 
+              '!<%= yeoman.spa.src %>/app.js',
+              '<%= yeoman.spa.src %>/app.js'
+            ],
           dest: '<%=yeoman.spa.dist%>/<%= pkg.name %>.js'
       }
     },
@@ -97,6 +106,19 @@ module.exports = function (grunt) {
     watch: {
       files: ['<%= jshint.files %>'],
       tasks: ['jshint', 'qunit']
+    },
+     react: {
+      jsx: {
+        files: [
+          {
+            expand: true,
+            cwd: '<%= yeoman.spa.src %>',
+            src: [ '**/*.jsx' ],
+            dest: '<%= yeoman.spa.src %>',
+            ext: '.js'
+          }
+        ]
+      }
     }
   });
 
@@ -106,10 +128,11 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-react');
 
   grunt.registerTask('test', ['jshint', 'qunit']);
 
-  grunt.registerTask('build-spa', ['jshint', 'concat:spa', 'uglify:spa', 'copy:spa']);
+  grunt.registerTask('build-spa', ['react','jshint', 'concat:spa', 'uglify:spa', 'copy:spa']);
   grunt.registerTask('build-api', ['jshint', 'copy:apidist', 'copy:apipub']);
   grunt.registerTask('build', ['build-spa', 'build-api']);
   grunt.registerTask('default', []);
