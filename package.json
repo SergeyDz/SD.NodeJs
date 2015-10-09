@@ -6,6 +6,7 @@
     "express": "latest",
     "react": "latest",
     "mongodb": "latest",
+    "jquery": "latest",
     "mongoose": "latest",
     "grunt": "latest",
     "body-parser": "latest"

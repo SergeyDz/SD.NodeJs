@@ -3,8 +3,8 @@ var CommentTab = React.createClass({
 		return (
 			 <div className="commentBox">
 				<h1>Comments</h1>
-				<CommentList />
 				<CommentEditor />
+				<CommentList data={this.props.data}/>
 			</div>
 			);
 	}

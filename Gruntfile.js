@@ -35,6 +35,7 @@ module.exports = function (grunt) {
           src: 
             [
               './node_modules/react/dist/react.js',
+              './node_modules/jquery/dist/jquery.js',
               '<%= yeoman.spa.src %>/**/*.js', 
               '!<%= yeoman.spa.src %>/app.js',
               '<%= yeoman.spa.src %>/app.js'
