@@ -5,10 +5,19 @@ var CommentTab = React.createClass({
 	},
 	
 	loadCommentListFromApi: function() {
-		$.get('http://localhost:8080/api/comments')
+		$.get(this.props.url)
 			.success(function (data) {
 				this.setState({data: data});
 			}.bind(this));
+	},
+	
+	handleCommentSubmit: function(comment) {
+		// TODO: send request to the server
+		$.post(this.props.url, comment)
+			.success(function() {
+				this.loadCommentListFromApi();
+			}
+			.bind(this));
 	},
 	
 	componentDidMount: function(){
@@ -19,7 +28,7 @@ var CommentTab = React.createClass({
 		return (
 			 <div className="commentBox">
 				<h1>Comments</h1>
-				<CommentEditor />
+				<CommentEditor onCommentSubmit={this.handleCommentSubmit}/>
 				<CommentList data={this.state.data}/>
 			</div>
 			);

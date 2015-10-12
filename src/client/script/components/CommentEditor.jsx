@@ -8,20 +8,16 @@ var CommentEditor = React.createClass({
 			return;
 		}
 		
-		// TODO: send request to the server
-		$.ajax({
-			type: "POST",
-			url: 'http://localhost:8080/api/comments',
-			data: {
+		var comment = {
 				Author: author, 
 				Comment: text
-		 	},
-			success: function() {
-				this.refs.author.value = '';
-				this.refs.text.value = '';
-			},
-			dataType: 'application/json'
-		});
+		 	};
+		
+		this.props.onCommentSubmit(comment);
+		
+		this.refs.author.value = '';
+		this.refs.comment.value = '';
+		
 		return;
 	},
 	
@@ -29,7 +25,7 @@ var CommentEditor = React.createClass({
 		return (
 			<form className='comment-editor' onSubmit={this.handleSubmit}>
 				<div>	
-					<textarea ref='text'/>
+					<textarea ref='text' required/>
 				</div>
 				<div>
 					<input type='text' ref='author' required />
