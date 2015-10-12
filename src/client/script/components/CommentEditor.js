@@ -14,11 +14,13 @@ var CommentEditor = React.createClass({displayName: "CommentEditor",
 		 	};
 		
 		this.props.onCommentSubmit(comment);
-		
-		this.refs.author.value = '';
-		this.refs.comment.value = '';
-		
+		this.clear();
 		return;
+	},
+	
+	clear: function(){
+		this.refs.author.value = '';
+		this.refs.text.value = '';
 	},
 	
 	render: function() {

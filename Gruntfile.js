@@ -84,6 +84,7 @@ module.exports = function (grunt) {
               './node_modules/express/**',
               './node_modules/body-parser/**',
               './node_modules/mongoose/**',
+              './node_modules/mongoose-timestamp/**',
               './node_modules/mongodb/**'
               ], 
               dest: '<%= yeoman.api.pub %>' },

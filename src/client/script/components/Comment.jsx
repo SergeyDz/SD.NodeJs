@@ -2,9 +2,10 @@ var Comment = React.createClass({
 	render: function() {
 		return (
 				<div className='comment'>
-					<h4 className='commit-author'>
-						{this.props.Author}
-					</h4>
+					<div className='commit-author'>
+						{this.props.Author} - {this.props.createdAt}
+					</div>
+					
 					{this.props.children}
 				</div>
 			);

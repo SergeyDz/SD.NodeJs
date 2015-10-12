@@ -8,6 +8,7 @@
     "mongodb": "latest",
     "jquery": "latest",
     "mongoose": "latest",
+    "mongoose-timestamp": "latest",
     "grunt": "latest",
     "body-parser": "latest"
   },

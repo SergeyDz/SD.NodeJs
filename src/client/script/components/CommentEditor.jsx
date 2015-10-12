@@ -14,21 +14,23 @@ var CommentEditor = React.createClass({
 		 	};
 		
 		this.props.onCommentSubmit(comment);
-		
-		this.refs.author.value = '';
-		this.refs.comment.value = '';
-		
+		this.clear();
 		return;
+	},
+	
+	clear: function(){
+		this.refs.author.value = '';
+		this.refs.text.value = '';
 	},
 	
 	render: function() {
 		return (
 			<form className='comment-editor' onSubmit={this.handleSubmit}>
 				<div>	
-					<textarea ref='text' required/>
+					<textarea ref='text' className='comment-text' required/>
 				</div>
 				<div>
-					<input type='text' ref='author' required />
+					<input type='text' ref='author' className='comment-author' required />
 				</div>
 				<div>
 					<input type="submit" value="Post" />
