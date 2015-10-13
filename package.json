@@ -10,7 +10,8 @@
     "mongoose": "latest",
     "mongoose-timestamp": "latest",
     "grunt": "latest",
-    "body-parser": "latest"
+    "body-parser": "latest",
+    "react-router": "latest"
   },
   "devDependencies": {
     "grunt": "^0.4.5",

@@ -27,10 +27,10 @@ var CommentEditor = React.createClass({displayName: "CommentEditor",
 		return (
 			React.createElement("form", {className: "comment-editor", onSubmit: this.handleSubmit}, 
 				React.createElement("div", null, 	
-					React.createElement("textarea", {ref: "text", required: true})
+					React.createElement("textarea", {ref: "text", className: "comment-text", required: true})
 				), 
 				React.createElement("div", null, 
-					React.createElement("input", {type: "text", ref: "author", required: true})
+					React.createElement("input", {type: "text", ref: "author", className: "comment-author", required: true})
 				), 
 				React.createElement("div", null, 
 					React.createElement("input", {type: "submit", value: "Post"})
