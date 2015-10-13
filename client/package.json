@@ -16,6 +16,8 @@
     "load-grunt-tasks": "latest",
     "time-grunt": "latest",
     "grunt-es6-transpiler": "latest",
-    "grunt-es6-module-transpiler": "latest"
+    "grunt-es6-module-transpiler": "latest",
+    "grunt-contrib-clean": "latest",
+    "grunt-browserify": "latest"
   }
 }
