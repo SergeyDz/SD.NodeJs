@@ -9,7 +9,7 @@ module.exports = function (grunt) {
   // Configurable paths for the application
   var appConfig = {
     spa: {
-      src: 'src/script',
+      src: 'src',
       dist: 'dist/spa',
       pub: '/var/www/SD.NodeJs/public_html/'
     }
@@ -28,9 +28,9 @@ module.exports = function (grunt) {
         type: 'amd',
         files: [{
           expand: true,
-          cwd: 'lib/',
+          cwd: '<%= yeoman.spa.dist %>',
           src: ['**/*.js'],
-          dest: 'tmp/',
+          dest: '<%= yeoman.spa.dist %>',
           ext: '.amd.js'
         }]
       },
@@ -39,14 +39,10 @@ module.exports = function (grunt) {
         type: 'cjs',
         files: [{
           expand: true,
-          cwd: 'lib/',
-          src: ['my_library/*.js'],
-          dest: 'dist/commonjs/',
+          cwd: '<%= yeoman.spa.dist %>',
+          src: ['**/*.js'],
+          dest: '<%= yeoman.spa.dist %>',
           ext: '.js'
-        },
-        {
-          src: ['lib/my_library.js'],
-          dest: 'dist/commonjs/main.js'
         }]
       }
     },
@@ -58,25 +54,24 @@ module.exports = function (grunt) {
       spa: {
           src: 
             [
-              './node_modules/react/dist/react.js',
-              './node_modules/jquery/dist/jquery.js',
               '<%= yeoman.spa.src %>/**/*.js', 
               '!<%= yeoman.spa.src %>/app.js',
               '<%= yeoman.spa.src %>/app.js'
             ],
-          dest: '<%=yeoman.spa.dist%>/<%= pkg.name %>.js'
+          dest: '<%=yeoman.spa.dist%>/main.js'
       }
     },
-    uglify: {
-      options: {
-        banner: '/*! <%= pkg.name %> <%= grunt.template.today("dd-mm-yyyy") %> */\n'
-      },
-      spa: {
-          files: {
-            '<%=yeoman.spa.dist%>/<%= pkg.name %>.min.js': ['<%= concat.spa.dest %>']
-        }
-      }
-    },
+    // ,
+    // uglify: {
+    //   options: {
+    //     banner: '/*! <%= pkg.name %> <%= grunt.template.today("dd-mm-yyyy") %> */\n'
+    //   },
+    //   spa: {
+    //       files: {
+    //         '<%=yeoman.spa.dist%>/<%= pkg.name %>.min.js': ['<%= concat.spa.dest %>']
+    //     }
+    //   }
+    // }
     qunit: {
       files: ['test/**/*.html']
     },
@@ -87,7 +82,7 @@ module.exports = function (grunt) {
           { expand: true, flatten: true, src: ['<%= yeoman.spa.dist %>/**/*.js'], dest: '<%= yeoman.spa.pub %>' },
       
           // includes files within path and its sub-directories
-          { expand: true, flatten: true, src: ['src/client/index.html'], dest: '<%= yeoman.spa.pub %>' }
+          { expand: true, flatten: true, src: ['src/index.html'], dest: '<%= yeoman.spa.pub %>' }
         ],
       }
     },
@@ -95,6 +90,7 @@ module.exports = function (grunt) {
       files: ['Gruntfile.js', 'src/**/*.js', 'test/**/*.js'],
       options: {
         // options here to override JSHint defaults
+        esnext: true,
         globals: {
           jQuery: true,
           console: true,
@@ -109,6 +105,10 @@ module.exports = function (grunt) {
     },
      react: {
       jsx: {
+        options:{
+          harmony: false, 
+          es6module: true
+        },
         files: [
           {
             expand: true,
@@ -119,6 +119,13 @@ module.exports = function (grunt) {
           }
         ]
       }
+    }, 
+    es6transpiler: {
+        dist: {
+            files: {
+                '<%=yeoman.spa.dist%>/main.js': '<%=yeoman.spa.dist%>/main.js'
+            }
+        }
     }
   });
 
@@ -133,7 +140,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('test', ['jshint', 'qunit']);
 
-  grunt.registerTask('build-spa', ['react','jshint', 'concat:spa', 'uglify:spa', 'copy:spa']);
+  grunt.registerTask('build-spa', ['react','jshint', 'concat:spa', 'es6transpiler', 'transpile:commonjs', 'copy:spa']);
   grunt.registerTask('build', ['build-spa']);
   grunt.registerTask('default', []);
 

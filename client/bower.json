@@ -12,6 +12,7 @@
   
   "dependencies": {
     "react": "latest",
+    "react-router": "latest",
     "jquery": "latest"
   },  
   
