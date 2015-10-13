@@ -11,6 +11,7 @@ module.exports = function (grunt) {
     spa: {
       src: 'src',
       dist: 'dist',
+      tmp: 'tmp',
       pub: '/var/www/SD.NodeJs/public_html/'
     }
   };
@@ -114,7 +115,7 @@ module.exports = function (grunt) {
             expand: true,
             cwd: '<%= yeoman.spa.src %>',
             src: [ '**/*.jsx' ],
-            dest: '<%= yeoman.spa.dist %>',
+            dest: '<%= yeoman.spa.tmp %>',
             ext: '.js'
           }
         ]
@@ -122,9 +123,15 @@ module.exports = function (grunt) {
     }, 
     es6transpiler: {
         dist: {
-            files: {
-                '<%=yeoman.spa.dist%>/main.js': '<%=yeoman.spa.dist%>/main.js'
-            }
+            files: [
+          {
+            expand: true,
+            cwd: '<%= yeoman.spa.tmp %>',
+            src: [ '**/*.js' ],
+            dest: '<%= yeoman.spa.tmp %>',
+            ext: '.module.js'
+          }
+        ]
         }
     }
   });
@@ -139,9 +146,28 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-react');
 
   grunt.registerTask('test', ['jshint', 'qunit']);
+  
+ grunt.registerTask("concat-modules", "Concat modules to one module related file", function() {
+
+  // read all subdirectories from your modules folder
+  grunt.file.expand("tmp/modules/*").forEach(function (dir) {
+    dir = dir.substr(dir.lastIndexOf('/')+1);
+    // get the current concat config
+    var concat = grunt.config.get('concat') || {};
+    // set the config for this modulename-directory
+    concat[dir] = {
+     src: ['tmp/modules/' + dir + '/*.js', '!tmp/modules/' + dir + '/' + dir + '.module.js'],
+     dest: 'tmp/modules/' + dir + '/' + dir + '.module.js'
+    };
+    // save the new concat configuration
+    grunt.config.set('concat', concat);
+  });
+  // when finished run the concatinations
+  grunt.task.run('concat');
+});
 
   //grunt.registerTask('build-spa', ['react','jshint', 'concat:spa', 'es6transpiler', 'transpile:commonjs', 'copy:spa']);
-  grunt.registerTask('build-spa', ['react','jshint']);
+  grunt.registerTask('build-spa', ['react','jshint', 'concat-modules']);
   grunt.registerTask('build', ['build-spa']);
   grunt.registerTask('default', []);
 
