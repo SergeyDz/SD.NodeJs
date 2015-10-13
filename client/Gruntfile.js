@@ -9,16 +9,10 @@ module.exports = function (grunt) {
   // Configurable paths for the application
   var appConfig = {
     spa: {
-      src: 'src/client/script',
+      src: 'src/script',
       dist: 'dist/spa',
       pub: '/var/www/SD.NodeJs/public_html/'
-    },
-    api: {
-      src: 'src/server',
-      dist: 'dist/api',
-      pub: '/var/www/SD.NodeJs/public_node/'
     }
-
   };
 
   grunt.initConfig({
@@ -95,32 +89,6 @@ module.exports = function (grunt) {
           // includes files within path and its sub-directories
           { expand: true, flatten: true, src: ['src/client/index.html'], dest: '<%= yeoman.spa.pub %>' }
         ],
-      },
-      
-      apidist: {
-        files: [
-           { 
-            expand: true, 
-            cwd: '<%= yeoman.api.src %>',
-            src:  '**',
-            dest: '<%= yeoman.api.dist %>' }
-        ],
-      },
-
-      apipub: {
-        files: [
-           { expand: true, 
-            src: [
-              './node_modules/express/**',
-              './node_modules/body-parser/**',
-              './node_modules/mongoose/**',
-              './node_modules/mongoose-timestamp/**',
-              './node_modules/mongodb/**'
-              ], 
-              dest: '<%= yeoman.api.pub %>' },
-          // includes files within path
-          { expand: true, cwd: '<%= yeoman.api.dist %>', src: '**', dest: '<%= yeoman.api.pub %>' },
-        ],
       }
     },
     jshint: {
@@ -166,7 +134,6 @@ module.exports = function (grunt) {
   grunt.registerTask('test', ['jshint', 'qunit']);
 
   grunt.registerTask('build-spa', ['react','jshint', 'concat:spa', 'uglify:spa', 'copy:spa']);
-  grunt.registerTask('build-api', ['jshint', 'copy:apidist', 'copy:apipub']);
   grunt.registerTask('build', ['build-spa']);
   grunt.registerTask('default', []);
 
