@@ -10,7 +10,7 @@ module.exports = function (grunt) {
   var appConfig = {
     spa: {
       src: 'src',
-      dist: 'dist/spa',
+      dist: 'dist',
       pub: '/var/www/SD.NodeJs/public_html/'
     }
   };
@@ -114,7 +114,7 @@ module.exports = function (grunt) {
             expand: true,
             cwd: '<%= yeoman.spa.src %>',
             src: [ '**/*.jsx' ],
-            dest: '<%= yeoman.spa.src %>',
+            dest: '<%= yeoman.spa.dist %>',
             ext: '.js'
           }
         ]
@@ -140,7 +140,8 @@ module.exports = function (grunt) {
 
   grunt.registerTask('test', ['jshint', 'qunit']);
 
-  grunt.registerTask('build-spa', ['react','jshint', 'concat:spa', 'es6transpiler', 'transpile:commonjs', 'copy:spa']);
+  //grunt.registerTask('build-spa', ['react','jshint', 'concat:spa', 'es6transpiler', 'transpile:commonjs', 'copy:spa']);
+  grunt.registerTask('build-spa', ['react','jshint']);
   grunt.registerTask('build', ['build-spa']);
   grunt.registerTask('default', []);
 

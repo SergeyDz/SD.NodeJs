@@ -1,0 +1,2 @@
+import CommentTab from 'CommentTab';
+
