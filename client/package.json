@@ -18,6 +18,7 @@
     "grunt-es6-transpiler": "latest",
     "grunt-es6-module-transpiler": "latest",
     "grunt-contrib-clean": "latest",
-    "grunt-browserify": "latest"
+    "grunt-browserify": "latest", 
+    "grunt-babel": "latest"
   }
 }

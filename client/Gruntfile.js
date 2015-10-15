@@ -161,6 +161,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-react');
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-browserify');
+  grunt.loadNpmTasks('grunt-babel');
   
 
   grunt.registerTask('test', ['jshint', 'qunit']);
@@ -193,36 +194,44 @@ module.exports = function (grunt) {
     console.log(dir);
     // get the current concat config
     var concat = grunt.config.get('concat') || {};
-    var es6transpiler = grunt.config.get('es6transpiler') || {};
-    var transpiler = grunt.config.get('transpile') || {};
+    var babel = grunt.config.get('babel') || {};
+    // var es6transpiler = grunt.config.get('es6transpiler') || {};
+    // var transpiler = grunt.config.get('transpile') || {};
     // set the config for this modulename-directory
     concat[dir] = {
      src: ['tmp/modules/' + dir + '/*.js'],
      dest: 'tmp/modules/' + dir + '/' + dir + '.module.js'
     };
     
-     es6transpiler[dir] = {
-     src:  'tmp/modules/' + dir + '/' + dir + '.module.js',
-     dest: 'tmp/modules/' + dir + '/' + dir + '.module.precompiled.js'
+    babel[dir] = {
+     src: ['tmp/modules/' + dir + '/*.js'],
+     dest: 'tmp/modules/' + dir + '/' + dir + '.module.compiled.js'
     };
     
-    transpiler[dir] = {
-      type: 'cjs',
-      files: [{
-        src:  'tmp/modules/' + dir + '/' + dir + '.module.precompiled.js',
-        dest: 'tmp/modules/' + dir + '/' + dir + '.module.compiled.js'
-      }]
-    };
+    // es6transpiler[dir] = {
+    //  src:  'tmp/modules/' + dir + '/' + dir + '.module.js',
+    //  dest: 'tmp/modules/' + dir + '/' + dir + '.module.precompiled.js'
+    // };
+    // 
+    // transpiler[dir] = {
+    //   type: 'cjs',
+    //   files: [{
+    //     src:  'tmp/modules/' + dir + '/' + dir + '.module.precompiled.js',
+    //     dest: 'tmp/modules/' + dir + '/' + dir + '.module.compiled.js'
+    //   }]
+    // };
     
     // save the new concat configuration
     grunt.config.set('concat', concat);
-    grunt.config.set('es6transpiler', es6transpiler);
-    grunt.config.set('transpile', transpiler);
+    grunt.config.set('babel', babel);
+    // grunt.config.set('es6transpiler', es6transpiler);
+    // grunt.config.set('transpile', transpiler);
   });
   // when finished run the concatinations
   grunt.task.run('concat');
-  grunt.task.run('es6transpiler');
-  grunt.task.run('transpile');
+  grunt.task.run('babel');
+  // grunt.task.run('es6transpiler');
+  // grunt.task.run('transpile');
   
 });
 
