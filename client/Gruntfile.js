@@ -23,31 +23,6 @@ module.exports = function (grunt) {
 
     pkg: grunt.file.readJSON('package.json'),
     
-//     // START ES6 Compile here
-//     transpile: {
-//       amd: {
-//         type: 'amd',
-//         files: [{
-//           expand: true,
-//           cwd: '<%= yeoman.spa.dist %>',
-//           src: ['**/*.js'],
-//           dest: '<%= yeoman.spa.dist %>',
-//           ext: '.amd.js'
-//         }]
-//       },
-// 
-//       commonjs: {
-//         type: 'cjs',
-//         files: [{
-//           expand: true,
-//           cwd: '<%= yeoman.spa.dist %>',
-//           src: ['**/*.js'],
-//           dest: '<%= yeoman.spa.dist %>',
-//           ext: '.js'
-//         }]
-//       }
-//     },
-    
     concat: {
       options: {
         separator: ';'
@@ -136,19 +111,6 @@ module.exports = function (grunt) {
         dest: '<%= yeoman.spa.dist %>/main.js'
       }
     }
-    // es6transpiler: {
-    //     dist: {
-    //         files: [
-    //       {
-    //         expand: true,
-    //         cwd: '<%= yeoman.spa.tmp %>',
-    //         src: [ '**/*.js' ],
-    //         dest: '<%= yeoman.spa.tmp %>',
-    //         ext: '.module.js'
-    //       }
-    //     ]
-    //     }
-    // }
   });
 
   grunt.loadNpmTasks('grunt-contrib-uglify');
@@ -166,27 +128,8 @@ module.exports = function (grunt) {
 
   grunt.registerTask('test', ['jshint', 'qunit']);
   
-//   grunt.registerMultiTask('browser', "Export a module to the window", function() {
-//   var opts = this.options();
-//   this.files.forEach(function(f) {
-//     var output = ["(function(globals) {"];
-// 
-//     output.push.apply(output, f.src.map(grunt.file.read));
-// 
-//     output.push(grunt.template.process(
-//       'window.<%= namespace %> = requireModule("<%= barename %>");', { 
-//       data: {
-//         namespace: opts.namespace,
-//         barename: opts.barename
-//       }
-//     }));
-//     output.push('})(window);');
-// 
-//     grunt.file.write(f.dest, grunt.template.process(output.join("\n")));
-//   });
-// });
   
- grunt.registerTask("concat-modules", "Concat modules to one module related file", function() {
+  grunt.registerTask("concat-modules", "Concat modules to one module related file", function() {
 
   // read all subdirectories from your modules folder
   grunt.file.expand("tmp/modules/*").forEach(function (dir) {
@@ -195,8 +138,7 @@ module.exports = function (grunt) {
     // get the current concat config
     var concat = grunt.config.get('concat') || {};
     var babel = grunt.config.get('babel') || {};
-    // var es6transpiler = grunt.config.get('es6transpiler') || {};
-    // var transpiler = grunt.config.get('transpile') || {};
+
     // set the config for this modulename-directory
     concat[dir] = {
      src: ['tmp/modules/' + dir + '/*.js'],
@@ -208,30 +150,15 @@ module.exports = function (grunt) {
      dest: 'tmp/modules/' + dir + '/' + dir + '.module.compiled.js'
     };
     
-    // es6transpiler[dir] = {
-    //  src:  'tmp/modules/' + dir + '/' + dir + '.module.js',
-    //  dest: 'tmp/modules/' + dir + '/' + dir + '.module.precompiled.js'
-    // };
-    // 
-    // transpiler[dir] = {
-    //   type: 'cjs',
-    //   files: [{
-    //     src:  'tmp/modules/' + dir + '/' + dir + '.module.precompiled.js',
-    //     dest: 'tmp/modules/' + dir + '/' + dir + '.module.compiled.js'
-    //   }]
-    // };
     
     // save the new concat configuration
     grunt.config.set('concat', concat);
     grunt.config.set('babel', babel);
-    // grunt.config.set('es6transpiler', es6transpiler);
-    // grunt.config.set('transpile', transpiler);
+
   });
   // when finished run the concatinations
   grunt.task.run('concat');
   grunt.task.run('babel');
-  // grunt.task.run('es6transpiler');
-  // grunt.task.run('transpile');
   
 });
 
