@@ -1,7 +1,7 @@
 ;import React from 'react';
 
-const CommentList = React.createClass({displayName: "CommentList",
-	render() {
+var CommentList = React.createClass({displayName: "CommentList",
+	render: function() {
 		return (
 			React.createElement("div", {className: "comment-list"}, 
 				"Comment list" 
@@ -10,8 +10,8 @@ const CommentList = React.createClass({displayName: "CommentList",
 	}
 });
 
-;export const CommentTab = React.createClass({displayName: "CommentTab",
-	render() {
+;export var CommentTab = React.createClass({displayName: "CommentTab",
+	render: function() {
 		return (
 			React.createElement("div", {className: "comment-tab"}, 
 				React.createElement(CommentList, null)

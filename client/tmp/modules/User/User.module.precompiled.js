@@ -1,7 +1,7 @@
 import {React} from 'react';
 
-export const UserTab = React.createClass({displayName: "UserTab",
-	render() {
+export var UserTab = React.createClass({displayName: "UserTab",
+	render: function() {
 		return (
 			React.createElement("div", {className: "user-tab"}, 
 				"User tab" 

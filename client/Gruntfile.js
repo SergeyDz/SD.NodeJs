@@ -201,18 +201,19 @@ module.exports = function (grunt) {
      dest: 'tmp/modules/' + dir + '/' + dir + '.module.js'
     };
     
-    es6transpiler[dir] = {
+     es6transpiler[dir] = {
      src:  'tmp/modules/' + dir + '/' + dir + '.module.js',
-     dest: 'tmp/modules/' + dir + '/' + dir + '.module.es5.js'
+     dest: 'tmp/modules/' + dir + '/' + dir + '.module.precompiled.js'
     };
     
     transpiler[dir] = {
       type: 'cjs',
       files: [{
-        src:  'tmp/modules/' + dir + '/' + dir + '.module.es5.js',
+        src:  'tmp/modules/' + dir + '/' + dir + '.module.precompiled.js',
         dest: 'tmp/modules/' + dir + '/' + dir + '.module.compiled.js'
       }]
     };
+    
     // save the new concat configuration
     grunt.config.set('concat', concat);
     grunt.config.set('es6transpiler', es6transpiler);
@@ -222,6 +223,7 @@ module.exports = function (grunt) {
   grunt.task.run('concat');
   grunt.task.run('es6transpiler');
   grunt.task.run('transpile');
+  
 });
 
   //grunt.registerTask('build-spa', ['react','jshint', 'concat:spa', 'es6transpiler', 'transpile:commonjs', 'copy:spa']);
