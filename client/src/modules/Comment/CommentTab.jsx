@@ -1,10 +1,9 @@
-export const CommentTab = React.createClass({
+export class CommentTab extends React.Component
+{
 	render() {
-		return (
-			<div className='comment-tab'>
-				<CommentList />
-			</div>
-		);
+		return	<div className='comment-tab'>
+					<CommentList />
+				</div>
 	}
-});
+}
 

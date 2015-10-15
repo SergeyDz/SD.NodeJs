@@ -53,7 +53,7 @@ module.exports = function (grunt) {
       spa: {
         files: [
           // includes files within path
-          { expand: true, flatten: true, src: ['<%= yeoman.spa.dist %>/main.js'], dest: '<%= yeoman.spa.pub %>' },
+          { expand: true, flatten: true, src: ['<%= yeoman.spa.dist %>/index.js'], dest: '<%= yeoman.spa.pub %>' },
       
           // includes files within path and its sub-directories
           { expand: true, flatten: true, src: ['src/index.html'], dest: '<%= yeoman.spa.pub %>' }

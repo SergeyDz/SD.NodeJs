@@ -1,12 +1,9 @@
-import React from 'react';
-
-const CommentList = React.createClass({
+class CommentList extends React.Component
+{
 	render() {
-		return (
-			<div className='comment-list'>
-				Comment list 
-			</div>
-		);
+		return <div>
+					<h4>Hello from comment list 2</h4>
+					<CommentEditor />
+				</div>
 	}
-});
-
+}
