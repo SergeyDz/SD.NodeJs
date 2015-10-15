@@ -1,5 +1,5 @@
-var CommentTab = require('./Comment.module.compiled.js').CommentTab;
-var React = require('react');
+import {CommentTab} from './Comment.js';
+import React from 'react';
 
 console.log('Entry point reached');
 

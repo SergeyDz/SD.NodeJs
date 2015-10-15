@@ -32,7 +32,7 @@ module.exports = function (grunt) {
             [
               '<%= yeoman.spa.src %>/*.js'
                          ],
-          dest: '<%=yeoman.spa.dist%>/app.main.js'
+          dest: '<%=yeoman.spa.dist%>/app.js'
       }
     },
     // ,
@@ -62,7 +62,7 @@ module.exports = function (grunt) {
       modules: {
         files: [
           // includes files within path
-          { expand: true, flatten: true, src: ['<%= yeoman.spa.tmp %>/**/*.compiled.js'], dest: '<%= yeoman.spa.dist %>' },
+          { expand: true, flatten: true, src: ['<%= yeoman.spa.tmp %>/**/out/*.js'], dest: '<%= yeoman.spa.dist %>' },
         ],
       }
     },
@@ -83,7 +83,7 @@ module.exports = function (grunt) {
       files: ['<%= jshint.files %>'],
       tasks: ['jshint', 'qunit']
     },
-     react: {
+    react: {
       jsx: {
         options:{
           harmony: false, 
@@ -101,15 +101,25 @@ module.exports = function (grunt) {
       }
     }, 
     clean: ["tmp", "dist"],
+    
     browserify: {
-
-    options: {
-        debug: true
-      },
-      dev: {
-        src: '<%= yeoman.spa.dist %>/*.js',
-        dest: '<%= yeoman.spa.dist %>/main.js'
-      }
+      options: {
+          debug: true
+        },
+        dev: {
+          src: '<%= yeoman.spa.dist %>/*.js',
+          dest: '<%= yeoman.spa.dist %>/index.js'
+        }
+    },
+    babel: {
+        options: {
+            sourceMap: true
+        },
+        dist: {
+            files: {
+                '<%= yeoman.spa.dist %>/app.js': '<%= yeoman.spa.dist %>/*.js'
+            }
+        }
     }
   });
 
@@ -147,7 +157,7 @@ module.exports = function (grunt) {
     
     babel[dir] = {
      src: ['tmp/modules/' + dir + '/*.js'],
-     dest: 'tmp/modules/' + dir + '/' + dir + '.module.compiled.js'
+     dest: 'tmp/modules/' + dir + '/out/' + dir + '.js'
     };
     
     
