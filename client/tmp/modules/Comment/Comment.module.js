@@ -1,4 +1,5 @@
-import React from 'react'
+// Comment !!!!!!
+var a='A';;import React from 'react'
 
 class CommentEditor extends React.Component
 {

@@ -1,0 +1,2 @@
+// Comment !!!!!!
+var a='A';

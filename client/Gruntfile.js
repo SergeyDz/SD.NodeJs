@@ -150,8 +150,8 @@ module.exports = function (grunt) {
     var babel = grunt.config.get('babel') || {};
 
     // set the config for this modulename-directory
-    concat[dir] = {
-     src: ['tmp/modules/' + dir + '/*.js'],
+    concat[dir+'.razor'] = {
+     src: ['<%= yeoman.spa.src %>/modules/' + dir + '/**/*.js', 'tmp/modules/' + dir + '/**/*.js'],
      dest: 'tmp/modules/' + dir + '/' + dir + '.module.js'
     };
     
