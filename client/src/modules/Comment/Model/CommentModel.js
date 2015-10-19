@@ -1,2 +1,5 @@
-// Comment !!!!!!
-var a='A';
+class CommentModel extends ActiveRecord {
+	constructor(options) {
+		super(options);
+	}
+}

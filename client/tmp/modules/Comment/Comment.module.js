@@ -1,7 +1,45 @@
-// Comment !!!!!!
-var a='A';;import React from 'react'
+import $ from 'jquery';
 
-class CommentEditor extends React.Component
+class ActiveRecord {
+	
+	constructor(options) {
+		this.url = options.url;
+	}
+	
+	save(options) {
+		this.model = options.model;
+		this.success = options.success || {};
+		 
+		$.post(this.url, this.model)
+			.success((data) =>  {
+				console.log('model post succesfully');
+				this.success(data);
+			}
+			.bind(this));
+	}
+	
+	static getList(options) {
+		$.get(options.url)
+			.success((data) => 
+				{ 
+					options.success(data); 
+				});
+	}
+};class CommentModel extends ActiveRecord {
+	constructor(options) {
+		super(options);
+	}
+};import React from 'react'
+
+class Comment extends React.Component
+{
+	render() {
+		return  React.createElement("div", {className: "comment-view"}, 
+					React.createElement("div", null, this.props.Author, " - ", this.props.createdAt), 
+					React.createElement("div", null, this.props.Comment)
+				)
+	}
+};class CommentEditor extends React.Component
 {
 	constructor() 
 	{
@@ -26,6 +64,8 @@ class CommentEditor extends React.Component
 		let author = this.refs.Author.value.trim();
 		let comment = this.refs.Comment.value.trim();
 		
+		this.props.onSubmit({Author: author, Comment: comment });
+		
 		this.clear();
 	}
 	
@@ -36,26 +76,63 @@ class CommentEditor extends React.Component
 };class CommentList extends React.Component
 {
 	render() {
+		let nodes = this.props.data.map((comment) => {
+			return 	React.createElement("div", null, 
+						React.createElement(Comment, {Author: comment.Author, 
+							Comment: comment.Comment, 
+							createdAt: comment.createdAt}
+						)
+					)
+		});
 		return React.createElement("div", null, 
-					React.createElement("h4", null, "Hello from comment list 2"), 
-					React.createElement(CommentEditor, null)
+					React.createElement("h4", null, "Comments"), 
+					nodes
 				)
 	}
 };export class CommentTab extends React.Component
 {
+	constructor() {
+		super();
+		this.setState = this.setState.bind(this);
+		this.getInitialState = this.getInitialState.bind(this);
+		this.loadCommentListFromApi = this.loadCommentListFromApi.bind(this);
+		this.componentDidMount = this.componentDidMount.bind(this);
+		
+		this.state = this.getInitialState();
+	}
+
+	getInitialState() {
+		return { data: [] };
+	} 
+	
+	componentDidMount() {
+		this.loadCommentListFromApi();
+	}
+	
+	loadCommentListFromApi() {
+		CommentModel.getList({ url: 'http://localhost:8080/api/comments',
+			success: (data) =>  {
+				this.setState({data: data});
+			}
+		 });
+	}
+	
 	render() {
 		return	React.createElement("div", {className: "comment-tab"}, 
-					React.createElement(CommentList, null)
+					React.createElement(CommentEditor, {onSubmit: this.handleSubmit}), 
+					React.createElement(CommentList, {data: this.state.data})
 				)
+	}
+	
+	handleSubmit(comment) {
+		let record = new CommentModel({
+				url: 'http://localhost:8080/api/comments'
+			});
+		
+		record.save({
+			model: comment,
+			success: () => { console.log('record added'); }
+		});
 	}
 }
 
-;class CommentView extends React.Component
-{
-	render() {
-		return  React.createElement("div", {className: "comment-view"}, 
-					React.createElement("div", null, this.props.Author, " - ", this.props.createdAt), 
-					React.createElement("div", null, this.props.Comment)
-				)
-	}
-}

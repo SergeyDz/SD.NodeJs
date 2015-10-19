@@ -1,5 +1,3 @@
-import React from 'react'
-
 class CommentEditor extends React.Component
 {
 	constructor() 
@@ -24,6 +22,8 @@ class CommentEditor extends React.Component
 		e.preventDefault();
 		let author = this.refs.Author.value.trim();
 		let comment = this.refs.Comment.value.trim();
+		
+		this.props.onSubmit({Author: author, Comment: comment });
 		
 		this.clear();
 	}
