@@ -32,12 +32,15 @@ class ActiveRecord {
 		super(options);
 	}
 };import React from 'react'
+import Time from 'react-time'
 
 class Comment extends React.Component
 {
 	render() {
 		return  React.createElement("div", {className: "comment-view"}, 
-					React.createElement("div", null, this.props.Author, " - ", this.props.createdAt), 
+					React.createElement("div", null, this.props.Author, " -",  
+						React.createElement(Time, {value: this.props.createdAt, format: "YYYY/MM/DD HH:mm:ss"})
+					), 
 					React.createElement("div", null, this.props.Comment)
 				)
 	}
