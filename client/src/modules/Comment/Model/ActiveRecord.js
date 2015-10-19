@@ -12,8 +12,7 @@ class ActiveRecord {
 		$.post(this.url, model)
 			.success((data) =>  {
 				def.resolve(data);
-			}
-			.bind(this));
+			});
 			
 		return def.promise;
 	}

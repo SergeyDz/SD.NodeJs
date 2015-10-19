@@ -2,12 +2,9 @@ export class CommentTab extends React.Component
 {
 	constructor() {
 		super();
-		this.setState = this.setState.bind(this);
-		this.getInitialState = this.getInitialState.bind(this);
-		this.loadCommentListFromApi = this.loadCommentListFromApi.bind(this);
-		this.componentDidMount = this.componentDidMount.bind(this);
 		
 		this.state = this.getInitialState();
+		this.handleSubmit = this.handleSubmit.bind(this);
 	}
 
 	getInitialState() {
@@ -36,7 +33,7 @@ export class CommentTab extends React.Component
 		let record = new CommentModel({
 				url: 'http://localhost:8080/api/comments'
 			});
-		
+			
 		record.save(comment).then(() => { this.loadCommentListFromApi(); })
 	}
 }
