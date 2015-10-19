@@ -1,4 +1,5 @@
 import $ from 'jquery';
+import deferred from 'deferred';
 
 class ActiveRecord {
 	
@@ -6,24 +7,26 @@ class ActiveRecord {
 		this.url = options.url;
 	}
 	
-	save(options) {
-		this.model = options.model;
-		this.success = options.success || {};
-		 
-		$.post(this.url, this.model)
+	save(model) {
+		let def = deferred();
+		$.post(this.url, model)
 			.success((data) =>  {
-				console.log('model post succesfully');
-				this.success(data);
+				def.resolve(data);
 			}
 			.bind(this));
+			
+		return def.promise;
 	}
 	
 	static getList(options) {
+		let def = deferred();
+		
 		$.get(options.url)
-			.success((data) => 
-				{ 
-					options.success(data); 
+			.success((data) => { 
+					def.resolve(data);
 				});
+				
+		return def.promise;
 	}
 };class CommentModel extends ActiveRecord {
 	constructor(options) {
@@ -110,11 +113,10 @@ class Comment extends React.Component
 	}
 	
 	loadCommentListFromApi() {
-		CommentModel.getList({ url: 'http://localhost:8080/api/comments',
-			success: (data) =>  {
+		CommentModel.getList({ url: 'http://localhost:8080/api/comments'})
+		.then( (data) =>  {
 				this.setState({data: data});
-			}
-		 });
+			} );
 	}
 	
 	render() {
@@ -129,10 +131,7 @@ class Comment extends React.Component
 				url: 'http://localhost:8080/api/comments'
 			});
 		
-		record.save({
-			model: comment,
-			success: () => { console.log('record added'); }
-		});
+		record.save(comment).then(() => { this.loadCommentListFromApi(); })
 	}
 }
 

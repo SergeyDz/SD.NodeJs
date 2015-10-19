@@ -1,4 +1,5 @@
 import $ from 'jquery';
+import deferred from 'deferred';
 
 class ActiveRecord {
 	
@@ -6,23 +7,25 @@ class ActiveRecord {
 		this.url = options.url;
 	}
 	
-	save(options) {
-		this.model = options.model;
-		this.success = options.success || {};
-		 
-		$.post(this.url, this.model)
+	save(model) {
+		let def = deferred();
+		$.post(this.url, model)
 			.success((data) =>  {
-				console.log('model post succesfully');
-				this.success(data);
+				def.resolve(data);
 			}
 			.bind(this));
+			
+		return def.promise;
 	}
 	
 	static getList(options) {
+		let def = deferred();
+		
 		$.get(options.url)
-			.success((data) => 
-				{ 
-					options.success(data); 
+			.success((data) => { 
+					def.resolve(data);
 				});
+				
+		return def.promise;
 	}
 }

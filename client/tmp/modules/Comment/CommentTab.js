@@ -19,11 +19,10 @@ export class CommentTab extends React.Component
 	}
 	
 	loadCommentListFromApi() {
-		CommentModel.getList({ url: 'http://localhost:8080/api/comments',
-			success: (data) =>  {
+		CommentModel.getList({ url: 'http://localhost:8080/api/comments'})
+		.then( (data) =>  {
 				this.setState({data: data});
-			}
-		 });
+			} );
 	}
 	
 	render() {
@@ -38,10 +37,7 @@ export class CommentTab extends React.Component
 				url: 'http://localhost:8080/api/comments'
 			});
 		
-		record.save({
-			model: comment,
-			success: () => { console.log('record added'); }
-		});
+		record.save(comment).then(() => { this.loadCommentListFromApi(); })
 	}
 }
 
