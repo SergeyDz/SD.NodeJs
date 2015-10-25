@@ -1,5 +1,8 @@
 var express = require('express');
 var router = require('./routes/route.js');
+var CommentRouter = require('./routes/route.comment.js');
+var UserRouter = require('./routes/route.user.js');
+var RequestRouter = require('./routes/route.request.js');
 var bodyParser = require('body-parser');
 
 
@@ -18,7 +21,9 @@ app.use(function(req, res, next) {
   next();
 });
 
-
+CommentRouter(router);
+UserRouter(router);
+RequestRouter(router);
 // REGISTER OUR ROUTES -------------------------------
 // all of our routes will be prefixed with /api
 app.use('/api', router);

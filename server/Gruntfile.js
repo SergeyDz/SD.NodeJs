@@ -24,7 +24,7 @@ module.exports = function (grunt) {
     pkg: grunt.file.readJSON('package.json'),
  
     copy: {      
-      apidist: {
+      dist: {
         files: [
            { 
             expand: true, 
@@ -34,11 +34,14 @@ module.exports = function (grunt) {
         ],
       },
 
-      apipub: {
+      pub: {
         files: [
            { expand: true, 
             src: [
               './node_modules/express/**',
+              './node_modules/pg/**',
+              './node_modules/pg-hstore/**',
+              './node_modules/sequelize/**',
               './node_modules/body-parser/**',
               './node_modules/mongoose/**',
               './node_modules/mongoose-timestamp/**',
@@ -66,17 +69,20 @@ module.exports = function (grunt) {
     watch: {
       files: ['<%= jshint.files %>'],
       tasks: ['jshint', 'qunit']
-    }
+    },
+    
+    clean: ["tmp", "dist"]
   });
 
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-qunit');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-contrib-clean');
 
   grunt.registerTask('test', ['jshint', 'qunit']);
 
-  grunt.registerTask('build-api', ['jshint', 'copy:apidist']);
+  grunt.registerTask('build-api', ['clean','jshint', 'copy:dist', 'copy:pub']);
   grunt.registerTask('build', ['build-api']);
   grunt.registerTask('default', []);
 

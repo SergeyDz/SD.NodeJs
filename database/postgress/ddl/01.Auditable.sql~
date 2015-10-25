@@ -1,0 +1,7 @@
+CREATE TABLE Auditable  
+(
+	CreatedById int not null default 1, 
+	CreatedOn date not null default now(),
+	UpdatedById int null, 
+	UpdatedOn date null
+);
