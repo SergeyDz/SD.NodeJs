@@ -117,7 +117,7 @@ module.exports = function (grunt) {
         },
         dist: {
             files: {
-                '<%= yeoman.spa.dist %>/app.js': '<%= yeoman.spa.dist %>/*.js'
+                '<%= yeoman.spa.dist %>/app.js': '<%= yeoman.spa.tmp %>/*.js'
             }
         }
     }

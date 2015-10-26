@@ -1,7 +1,7 @@
 import $ from 'jquery';
 import deferred from 'deferred';
 
-class ActiveRecord {
+export class ActiveRecord {
 	
 	constructor(options) {
 		this.url = options.url;

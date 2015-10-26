@@ -1,6 +1,6 @@
 import {ActiveRecord} from './Model';
 
-class CommentModel extends ActiveRecord {
+class RequestListModel extends ActiveRecord {
 	constructor(options) {
 		super(options);
 	}

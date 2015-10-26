@@ -1,12 +1,9 @@
 import React from 'react';
 
-export const UserTab = React.createClass({
+export class UserTab extends React.Component
+{
 	render() {
-		return (
-			<div className='user-tab'>
-				User tab 
-			</div>
-		);
+		return <div>User tab</div>
 	}
-});
+}
 
